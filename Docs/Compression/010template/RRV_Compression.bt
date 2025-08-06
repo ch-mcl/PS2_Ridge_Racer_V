@@ -1,0 +1,71 @@
+//------------------------------------------------
+//--- 010 Editor v13.0.1 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct {
+    byte unk0x00; // Maybe count of compressed data groups?
+    byte compressFlagCount;
+    uint uncompressedSize;
+    uint compressedSize;
+} Header;
+
+typedef struct {
+    ubyte compressFlags[8] <bgcolor=cRed>;
+    local int i = 0;
+    local uint compressFlag = 0x00;
+    for (i = 0; i < header.compressFlagCount; i++) {
+
+        compressFlag = compressFlags[i];
+        struct RRVData {
+            local int j = 0;
+            for(j = 0; j < 8; j++) {
+                // flag is compress 
+                if ( ((compressFlag >> j) & 0x01) == 0x00 ) {
+                    ushort compData <bgcolor=0xe0e0e0>;
+                // flag is uncompress
+                } else {
+                    ubyte unCompData;
+                }
+            }
+        } datas;
+    }
+} RRVCompData;
+
+
+
+//Main
+//Main
+LittleEndian();
+Header header;
+
+
+while (FTell() < header.compressedSize) {
+    RRVCompData rrvCompData;
+}
+
+/*
+// 00000190
+FSeek(0x2AE74);
+local int i = 0;
+local int TERMINATE = 0x8; // for safety
+for (i = 0; i < TERMINATE; i++){
+    RRVCompData rrvCompData;
+}
+*/
+
+/*
+local int i = 0;
+local int TERMINATE = 0x8; // for safety
+for (i = 0; i < TERMINATE; i++){
+    RRVCompData rrvCompData;
+}
+*/

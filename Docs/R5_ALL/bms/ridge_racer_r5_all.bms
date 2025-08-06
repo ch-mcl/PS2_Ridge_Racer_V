@@ -1,0 +1,72 @@
+# Ridge Racer V R5.ALL (script 0.0.1) by CH-MCL
+# script for QuickBMS http://quickbms.aluigi.org
+
+
+
+# Count of Files (USA)
+math FILES = 1136
+# Offset of TOC (USA)
+math TOC_OFFSET = 0x10D258
+
+# Try to Open TOC(USA)
+# Ridge Racer V stores TOC in GameProgram.
+open FDSE "SLUS_200.02" 0 EXIST_USA
+
+# Not Exist USA
+if EXIST_USA == 0
+    # Try to Open TOC(PAL)
+    open FDSE "SCES_500.00" 0 EXIST_PAL
+    math TOC_OFFSET = 0x1103B8
+    # Count of Files (PAL)
+    math FILES = 1208
+    
+    # Not Exist PAL
+    if EXIST_PAL == 0
+        # Try to Open TOC(JP)
+        open FDSE "SLPS_200.01" 0 EXIST_JP
+        math TOC_OFFSET = 0x10BFE8
+        # Count of Files (JP)
+        math FILES = 1136
+        
+        # Not Exist JP
+        if EXIST_JP == 0
+            # Try to Open TOC(Arcade Battle)
+            open FDSE "rrv3vera.ic002" 0 EXIST_AC_RRV3_A
+            math TOC_OFFSET = 0x1AB398
+            # Count of Files (AC_RRV3_A)
+            math FILES = 1155
+            
+            # Not Exist Arcade Battle
+            if EXIST_AC_RRV3_A == 0
+                exit
+            endif
+        endif
+    endif
+endif
+
+
+# Archive
+open FDSE "R5.ALL" 1 EXIST_R5_ALL
+
+# Not Exist R5.ALL
+if EXIST_R5_ALL == 0
+    open FDSE "RRV1_A" 1 EXIST_RRV1_A
+    # Not Exist RRV1_A
+    if EXIST_RRV1_A == 0
+        exit
+    endif
+endif
+
+# Move to TOC
+goto TOC_OFFSET 0
+
+for i = 0 < FILES
+    get OFFSET long
+    get BLOCKS long
+    get COMPRESS_SIZE long
+    get UNCOMPRESS_SIZE long
+    
+    math OFFSET *= 0x800
+    
+    log "R5_ALL/.*" OFFSET COMPRESS_SIZE 1
+next i

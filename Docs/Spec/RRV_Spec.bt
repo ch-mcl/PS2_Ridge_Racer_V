@@ -1,0 +1,38 @@
+//------------------------------------------------
+//--- 010 Editor v13.0.1 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+uint unk00h;
+uint unk04h;
+uint unk08h;
+float unk0Ch;
+float weight;
+float unk14h;
+float unk18h;
+float unk1Ch;
+uint unk20h;
+float unk24h[12];
+float unk58h[8]; // engine power??
+float gear_ratios[8];
+float unk94h;
+uint count_gear;
+float max_rpm;
+float min_rpm;
+float unkA4h;
+float unkA8;
+float unkAC;
+float trans_at_shift_points[7];
+float max_power_rpm; // maybe
+float max_torque_rpm; // maybe
+uint unkD4h;
+float unkD8;
+float unkDC[6];
+float unkF4[6];
