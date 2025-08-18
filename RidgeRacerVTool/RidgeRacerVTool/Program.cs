@@ -30,7 +30,7 @@ namespace RidgeRacerVTool
                 return;
             }
 
-            Unpacker unpacker = new Unpacker(options.ElfPath, options.InputPath, options.OutputPath);
+            Unpacker unpacker = new Unpacker(options.ElfPath, options.InputPath, options.OutputPath, options.GenerateHash);
             Console.WriteLine("Starting to unpack...");
             unpacker.Unpack();
             Console.WriteLine("Done.");
@@ -50,6 +50,9 @@ namespace RidgeRacerVTool
 
         [Option('o', "output", Required = true, HelpText = "Output directory for the extracted files.")]
         public string OutputPath { get; set; }
+
+        [Option('h', "hash", Required = false, HelpText = "Generate list of Hash value files.")]
+        public bool GenerateHash { get; set; }
 
     }
 
