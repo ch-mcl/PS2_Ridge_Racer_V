@@ -9,7 +9,8 @@ namespace RidgeRacerVTool
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Ridge Racer V Tool - by chmcl95");
+            Console.WriteLine();
 
             Parser.Default.ParseArguments<UnpackVerbs>(args)
                 .WithParsed<UnpackVerbs>(Unpack);
@@ -29,10 +30,10 @@ namespace RidgeRacerVTool
                 return;
             }
 
-            string elfName = Path.GetFileName(options.ElfPath);
-
-            var toc = new TableOfContents(elfName, options.ElfPath);
-            //toc.
+            Unpacker unpacker = new Unpacker(options.ElfPath, options.InputPath, options.OutputPath);
+            Console.WriteLine("Starting to unpack...");
+            unpacker.Unpack();
+            Console.WriteLine("Done.");
 
             return;
         }
