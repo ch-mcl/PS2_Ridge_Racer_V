@@ -34,6 +34,8 @@ namespace RidgeRacerVTool
 
         public void Unpack()
         {
+            Console.WriteLine("Starting to unpack...");
+
             if (_isGenerateHashList)
             {
                 // Generate CSV
@@ -77,6 +79,7 @@ namespace RidgeRacerVTool
                 }
             }
 
+            Console.WriteLine("Done.");
             return;
         }
 
@@ -129,6 +132,7 @@ namespace RidgeRacerVTool
                 }
             }
 
+            Console.WriteLine("Done.");
             return;
         }
 
