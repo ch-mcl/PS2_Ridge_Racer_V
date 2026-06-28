@@ -30,8 +30,13 @@ namespace RidgeRacerVTool
                 Console.WriteLine($"Provided R5.ALL or RRV_1 file '{options.InputPath}' does not exist.");
                 return;
             }
+            string outputPath = options.OutputPath;
+            if (string.IsNullOrEmpty(options.OutputPath))
+            {
+                outputPath = $"{Path.GetDirectoryName(options.InputPath)}\\extracted";
+            }
 
-            Unpacker unpacker = new Unpacker(options.ElfPath, options.InputPath, options.OutputPath, options.GenerateHash);
+            Unpacker unpacker = new Unpacker(options.ElfPath, options.InputPath, outputPath, options.GenerateHash);
             unpacker.Unpack();
 
             return;
@@ -51,8 +56,13 @@ namespace RidgeRacerVTool
                 return;
             }
 
-            string fileDirectory = Path.GetDirectoryName(options.ElfPath);
-            string outputPath = $@"{fileDirectory}\patched";
+            string outputPath = options.OutputPath;
+            if (string.IsNullOrEmpty(options.OutputPath))
+            {
+                outputPath = $"{Path.GetDirectoryName(options.ElfPath)}\\patched";
+            }
+
+
             int paddingSize = 0x00;
             if(!string.IsNullOrEmpty(options.PaddingSize) && !int.TryParse(options.PaddingSize, out paddingSize))
             {
@@ -67,7 +77,7 @@ namespace RidgeRacerVTool
         }
     }
 
-    [Verb("unpack", HelpText = "Unpacks R5.ALL(PS2) / RRV1_A(SYSTEM246)")]
+    [Verb("unpack", HelpText = "Unpacks R5.ALL(PS2) / RRV1_A(SYSTEM246).  Files are extract in \"extracted\" folder.(Deafult)")]
     public class UnpackVerbs
     {
         [Option('i', "input", Required = true, HelpText = "Input .DAT file like R5.ALL.")]
@@ -76,8 +86,7 @@ namespace RidgeRacerVTool
         [Option('e', "elf-path", Required = true, HelpText = "Input elf file. Example: SLUS_200.02.")]
         public string ElfPath { get; set; }
 
-        // is this needs ???
-        [Option('o', "output", Required = true, HelpText = "Output directory for the extracted files.")]
+        [Option('o', "output", Required = false, HelpText = "Output directory for the extracted files.")]
         public string OutputPath { get; set; }
 
         [Option('h', "hash", Required = false, HelpText = "Generate list of Hash value files.")]
@@ -85,7 +94,7 @@ namespace RidgeRacerVTool
 
     }
 
-    [Verb("patch", HelpText = "Packs R5.ALL(PS2) / RRV1_A(SYSTEM246). Also patching elf file. Those files are generats in \"patched\" folder.")]
+    [Verb("patch", HelpText = "Packs R5.ALL(PS2) / RRV1_A(SYSTEM246). Also patching elf file. Files are generat in \"patched\" folder.(Deafult)")]
     public class PatchVerbs
     {
         [Option('i', "input", Required = true, HelpText = "Input Directry. Need extracted R5.ALL files.")]
@@ -93,6 +102,9 @@ namespace RidgeRacerVTool
 
         [Option('e', "elf-path", Required = true, HelpText = "Input elf file. Example: SLUS_200.02.")]
         public string ElfPath { get; set; }
+
+        [Option('o', "output", Required = false, HelpText = "Output directory for the patched files.")]
+        public string OutputPath { get; set; }
 
         [Option("pad", Required = false, HelpText = "Padding for R5.All file.")]
         public string PaddingSize { get; set; }
